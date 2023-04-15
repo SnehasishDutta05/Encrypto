@@ -1,0 +1,58 @@
+import random
+import math
+
+def encrypto(x):
+  x = list(x)
+  alpha1 = "abcdefghijklmnopqrstuvwxyz"
+  alpha2 = "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
+
+  cipher = random.randint(0,10)
+  #print(cipher)
+  cipherkey = math.factorial(cipher)
+  cipherkey = str(cipherkey)
+
+  specialchar = ['!', '@', '#', '$', '%', '^', '&', '*', '(', ')', '_', '+', '~', '{', '}', '|', ':', '<', '>', '?', '`', '-', '=', '[', ']', '\\', ';', ',', '.', '/']
+  # print(len(specialchar
+
+
+  #using Ceaser Cipher 
+  
+  for i in range(len(x)):
+    if(x[i].islower()):
+      temp = alpha1.index(x[i])
+      x[i]=alpha1[(temp+cipher)%26]
+    elif(x[i].isupper()):
+      temp = alpha2.index(x[i])
+      x[i]=alpha2[(temp+cipher)%26]  
+    else:
+      pass
+
+  # print(x)
+  salt = random.randint(3,len(x)//3)
+  #print(salt)
+  saltkey = math.factorial(salt)
+  saltkey = str(saltkey)
+
+
+  #inserting Salt 
+  
+  j = 0
+  while(j<len(x)):
+    saltchar = random.randint(0,29)
+    # print(saltchar)
+    # print(specialchar[saltchar])
+    x.insert(j,specialchar[saltchar])
+    salt = (salt % 3)+5
+    j = j + salt
+    # print(x)
+    # print(salt)
+    # print(j)
+          
+  x = "".join(x)
+  x = x + "," + cipherkey +  "," + saltkey 
+  return x 
+
+print("Hello")
+password = input("Enter Password(min 10 char) : ")
+encrypted_string = encrypto(password)
+print(encrypted_string)
